@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="1033C">
+      <HintPath>..\..\1033C\1033C\bin\Debug\1033C.dll</HintPath>
+    </Reference>
+    <Reference Include="BlakcMakiga">
+      <HintPath>..\..\..\Visual Studio 2015\Projects\BlakcMakiga\BlakcMakiga\bin\Debug\BlakcMakiga.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
