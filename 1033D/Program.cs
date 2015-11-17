@@ -31,7 +31,7 @@ namespace _1033D {
             _1033C.Drones.MyDronePacket packet;
             Random r = new Random();
 
-            while ( true ) {
+            for(int i = 0; i < 20; i++) {                
                 System.Threading.Thread.Sleep( 1000 );
                 byte[] blob = BitConverter.GetBytes( r.NextDouble() * 100 ).Concat( BitConverter.GetBytes( r.NextDouble() * 100 ) ).Concat( BitConverter.GetBytes( r.NextDouble() * 20 ) ).ToArray();
                 packet = packageGenerator.GeneratePacket( _1033C.Drones.MyDronePacketContent.LocationUpdate, blob );
