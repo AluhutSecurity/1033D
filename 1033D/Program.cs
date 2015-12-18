@@ -8,12 +8,21 @@ namespace _1033D {
     class Program {
         static uint MYUID = 22347;
         static ushort sequenceCount;
-
-        private static void Handler() {
-
-        }
-
+        
         static void Main( string[] args ) {
+
+            var arduino = new _1033C.Communication.MyArduinoHandler();
+            Console.WriteLine( "please select a port: (by index)" );
+            int i = 0;
+            foreach(var portname in arduino.PortNames) {
+                Console.WriteLine( "{0}: {1}", i++, portname );
+            }
+            var cline = Console.ReadLine();
+            arduino.PortName = arduino.PortNames[int.Parse( cline )];
+            Console.WriteLine( "selected port: {0}", arduino.PortName );
+            arduino.Open();
+            Console.ReadKey();
+            arduino.Close();
 
             var client = BlakcMakiga.Abrakadubra.CreateInstance( BlakcMakiga.BlakcInstanceIdentifier.BlakcClient ) as BlakcMakiga.Net.IBlakcClient;
             client.Connect( new System.Net.IPEndPoint( _1033C.Defines.DEFAULT_DRONESERVER_IP, _1033C.Defines.DEFAULT_DRONESERVER_LOCALPORT ) );
@@ -31,9 +40,9 @@ namespace _1033D {
             _1033C.Drones.MyDronePacket packet;
             Random r = new Random();
 
-            for(int i = 0; i < 20; i++) {                
+            for ( i = 0; i < 200; i++ ) {
                 System.Threading.Thread.Sleep( 1000 );
-                byte[] blob = BitConverter.GetBytes( r.NextDouble() * 100 ).Concat( BitConverter.GetBytes( r.NextDouble() * 100 ) ).Concat( BitConverter.GetBytes( r.NextDouble() * 20 ) ).ToArray();
+                byte[] blob = ( BitConverter.GetBytes( r.NextDouble() * 100 ).Concat( BitConverter.GetBytes( r.NextDouble() * 100 ) ) ).Concat( BitConverter.GetBytes( r.NextDouble() * 20 ) ).ToArray();
                 packet = packageGenerator.GeneratePacket( _1033C.Drones.MyDronePacketContent.LocationUpdate, blob );
                 client.Send( sequenceCount++, packet.Serialize() );
             }
